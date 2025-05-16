@@ -1,8 +1,8 @@
 import type Joi from 'joi'
 import { messages } from 'joi-translation-pt-br'
-import { JoiValidationModel, Message } from '../domain/models'
-import { ViolationError } from '../presentation/errors/violation-error'
-import { IJoiValidation } from '../presentation/protocols'
+import { JoiValidationModel, Message } from '../../domain/models'
+import { ViolationError } from '../../presentation/errors'
+import { IJoiValidation } from '../../presentation/protocols'
 
 
 export class RequiredJoiSchemaValidation implements IJoiValidation {
