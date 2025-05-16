@@ -17,3 +17,7 @@ export * from './presentation/helpers/http-helpers'
 // Models (se necessário)
 export * from './domain/models/message'
 
+
+// Validation
+export * from './validation/validators/joi-validation'
+
