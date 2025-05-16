@@ -11,6 +11,7 @@ export * from './presentation/protocols/joi-validation'
 export * from './presentation/errors/manipulation-conflict-error'
 export * from './presentation/errors/server-error'
 export * from './presentation/errors/unauthorized-error'
+export * from './presentation/errors/violation-error'
 export * from './presentation/helpers/http-helpers'
 
 // Models (se necessário)
