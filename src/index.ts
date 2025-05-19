@@ -21,3 +21,5 @@ export * from './domain/models/message'
 // Validation
 export * from './validation/validators/joi-validation'
 
+// Decorators
+export * from './main/factories'
