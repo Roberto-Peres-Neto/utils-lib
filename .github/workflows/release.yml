@@ -29,6 +29,10 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           npm run release
 
+      - name: Remove GitHub Actions extraheader (force use of GH_TOKEN)
+        run: |
+          git config --global --unset-all http.https://github.com/.extraheader
+
       - name: Push changes and tag using GH_TOKEN
         run: |
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:master --follow-tags
