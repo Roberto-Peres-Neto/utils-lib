@@ -28,8 +28,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           npm run release
-          git push --follow-tags origin master
-
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:master --follow-tags
 
       - name: Publish to NPM
         run: npm publish
