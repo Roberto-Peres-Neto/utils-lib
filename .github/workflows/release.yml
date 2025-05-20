@@ -31,7 +31,8 @@ jobs:
 
       - name: Remove GitHub Actions extraheader (force use of GH_TOKEN)
         run: |
-          git config --global --unset-all http.https://github.com/.extraheader
+          git config --global --unset-all http.https://github.com/.extraheader || true
+
 
       - name: Push changes and tag using GH_TOKEN
         run: |
