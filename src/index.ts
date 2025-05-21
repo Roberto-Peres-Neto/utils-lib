@@ -23,3 +23,5 @@ export * from './validation/validators/joi-validation'
 
 // Decorators
 export * from './main/factories'
+export * from './main/middlewares'
+
