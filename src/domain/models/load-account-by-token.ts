@@ -12,5 +12,5 @@ export namespace LoadAccountByToken {
     costCenterCode: string
     changePassword: boolean
     roles: any[]
-  }
+  } | null
 }
