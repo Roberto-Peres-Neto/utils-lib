@@ -7,8 +7,15 @@ export const SequelizeHelper = {
   client: null as unknown as Sequelize,
   async connect(): Promise<void> {
     if (this.client) return // evita reconectar
-    
+
     console.log('🔌 Conectando ao SQL Server...')
+    console.log('🔥 SQL CONFIG:', {
+      host: process.env.SQLSERVER_SERVER,
+      database: process.env.SQLSERVER_DATABASE,
+      user: process.env.SQLSERVER_USER,
+      port: process.env.SQLSERVER_PORT
+    })
+
     this.client = new Sequelize(
       process.env.SQLSERVER_DATABASE as string,
       process.env.SQLSERVER_USER as string,
