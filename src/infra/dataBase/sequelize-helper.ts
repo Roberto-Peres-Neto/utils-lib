@@ -5,10 +5,10 @@ dotenv.config()
 
 export const SequelizeHelper = {
   client: null as unknown as Sequelize,
-
   async connect(): Promise<void> {
     if (this.client) return // evita reconectar
-
+    
+    console.log('🔌 Conectando ao SQL Server...')
     this.client = new Sequelize(
       process.env.SQLSERVER_DATABASE as string,
       process.env.SQLSERVER_USER as string,
@@ -17,7 +17,7 @@ export const SequelizeHelper = {
         dialect: 'mssql',
         host: process.env.SQLSERVER_SERVER,
         port: Number(process.env.SQLSERVER_PORT),
-        logging: process.env.SQLSERVER_DATABASE === 'dbFk' ? false : console.log,
+        logging: process.env.SQLSERVER_DATABASE === 'SGBDDEV' ? false : console.log,
         dialectOptions: {
           options: {
             requestTimeout: Number(process.env.SQLSERVER_TIMEOUT) || 30000,
