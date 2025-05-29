@@ -1,7 +1,4 @@
-import dotenv from 'dotenv'
 import { QueryTypes, Sequelize, Transaction } from 'sequelize'
-
-dotenv.config()
 
 export const SequelizeHelper = {
   client: null as unknown as Sequelize,
