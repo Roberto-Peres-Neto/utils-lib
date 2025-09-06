@@ -1,10 +1,6 @@
 {
   "name": "@rpn-solution/utils-lib",
-<<<<<<< HEAD
-  "version": "0.0.10",
-=======
   "version": "0.0.17",
->>>>>>> dabd5f9aa772c1c093b40b2247b4b48897b572cb
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
