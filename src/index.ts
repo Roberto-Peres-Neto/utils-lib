@@ -22,4 +22,7 @@ export * from './domain/models/message'
 export * from './validation/validators/joi-validation'
 
 // Decorators
+export * from './main/adapters'
 export * from './main/factories'
+export * from './main/middlewares'
+

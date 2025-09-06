@@ -1,13 +1,17 @@
-import dotenv from 'dotenv'
 import { QueryTypes, Sequelize, Transaction } from 'sequelize'
-
-dotenv.config()
 
 export const SequelizeHelper = {
   client: null as unknown as Sequelize,
-
   async connect(): Promise<void> {
     if (this.client) return // evita reconectar
+
+    console.log('🔌 Conectando ao SQL Server...')
+    console.log('🔥 SQL CONFIG:', {
+      host: process.env.SQLSERVER_SERVER,
+      database: process.env.SQLSERVER_DATABASE,
+      user: process.env.SQLSERVER_USER,
+      port: process.env.SQLSERVER_PORT
+    })
 
     this.client = new Sequelize(
       process.env.SQLSERVER_DATABASE as string,
@@ -17,7 +21,7 @@ export const SequelizeHelper = {
         dialect: 'mssql',
         host: process.env.SQLSERVER_SERVER,
         port: Number(process.env.SQLSERVER_PORT),
-        logging: process.env.SQLSERVER_DATABASE === 'dbFk' ? false : console.log,
+        logging: process.env.SQLSERVER_DATABASE === 'SGBDDEV' ? false : console.log,
         dialectOptions: {
           options: {
             requestTimeout: Number(process.env.SQLSERVER_TIMEOUT) || 30000,

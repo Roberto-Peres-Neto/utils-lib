@@ -1,0 +1,94 @@
+📦 RabbitMqAdapter.ts
+ts
+Copiar
+Editar
+import amqp, { Channel, Connection, ConsumeMessage } from 'amqplib'
+
+export class RabbitMqAdapter {
+  private static connection: Connection
+  private static channel: Channel
+
+  static async connect(): Promise<void> {
+    if (this.connection && this.channel) return
+
+    const { RABBITMQ_URL, RABBITMQ_PORT, RABBITMQ_USER, RABBITMQ_PASSWORD } = process.env
+
+    const uri = `amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@${RABBITMQ_URL}:${RABBITMQ_PORT}`
+    this.connection = await amqp.connect(uri)
+    this.channel = await this.connection.createChannel()
+
+    console.log('✅ Conectado ao RabbitMQ com sucesso')
+  }
+
+  static async publishToQueue(queue: string, message: any): Promise<void> {
+    await this.connect()
+    await this.channel.assertQueue(queue, { durable: true })
+    this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)))
+  }
+
+  static async consumeQueue(queue: string, callback: (msg: ConsumeMessage) => void): Promise<void> {
+    await this.connect()
+    await this.channel.assertQueue(queue, { durable: true })
+    this.channel.consume(queue, (msg) => {
+      if (msg) {
+        callback(msg)
+        this.channel.ack(msg)
+      }
+    })
+  }
+
+  static async publishToExchange(exchange: string, routingKey: string, message: any): Promise<void> {
+    await this.connect()
+    await this.channel.assertExchange(exchange, 'direct', { durable: true })
+    this.channel.publish(exchange, routingKey, Buffer.from(JSON.stringify(message)))
+  }
+
+  static async consumeExchange(
+    exchange: string,
+    routingKey: string,
+    callback: (msg: ConsumeMessage) => void
+  ): Promise<void> {
+    await this.connect()
+    await this.channel.assertExchange(exchange, 'direct', { durable: true })
+    const { queue } = await this.channel.assertQueue('', { exclusive: true })
+    await this.channel.bindQueue(queue, exchange, routingKey)
+    this.channel.consume(queue, (msg) => {
+      if (msg) {
+        callback(msg)
+        this.channel.ack(msg)
+      }
+    })
+  }
+
+  static async disconnect(): Promise<void> {
+    await this.channel?.close()
+    await this.connection?.close()
+  }
+}
+✅ Exemplo de uso
+Publicar numa fila:
+ts
+Copiar
+Editar
+await RabbitMqAdapter.publishToQueue('minha-fila', { id: 1, nome: 'teste' })
+Consumir uma fila:
+ts
+Copiar
+Editar
+RabbitMqAdapter.consumeQueue('minha-fila', (msg) => {
+  const content = JSON.parse(msg.content.toString())
+  console.log('🟢 Mensagem recebida:', content)
+})
+Publicar em exchange:
+ts
+Copiar
+Editar
+await RabbitMqAdapter.publishToExchange('minha-exchange', 'rota.teste', { msg: 'opa' })
+Consumir de exchange:
+ts
+Copiar
+Editar
+RabbitMqAdapter.consumeExchange('minha-exchange', 'rota.teste', (msg) => {
+  const content = JSON.parse(msg.content.toString())
+  console.log('📨 Recebido da exchange:', content)
+})

@@ -1,6 +1,10 @@
 {
   "name": "@rpn-solution/utils-lib",
+<<<<<<< HEAD
   "version": "0.0.10",
+=======
+  "version": "0.0.17",
+>>>>>>> dabd5f9aa772c1c093b40b2247b4b48897b572cb
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -16,15 +20,19 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/amqplib": "^0.10.7",
     "@types/express": "^5.0.1",
     "@types/joi": "^17.2.2",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/sequelize": "^4.28.20",
     "standard-version": "^9.5.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@casl/ability": "^6.7.3",
     "@types/dotenv": "^6.1.1",
     "@types/mongodb": "^4.0.6",
+    "amqplib": "^0.10.8",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "joi": "^17.13.3",
